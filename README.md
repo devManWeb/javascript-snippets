@@ -1,2 +1,6 @@
 # javascript-snippets
-A collection of simple javascript scripts to do cool stuff
+The code in this repo was written to do cool stuff, for programming exercise or just for my curiosity.
+
+## List of Scripts
+
+- Random-shapes: this snippets creates random lines, circles or rectangles in a HTM canvas.
