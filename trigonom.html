@@ -106,8 +106,13 @@ function start_curve() {
     					y = canvas.height/2 - chosen_trigonometric.call(x*Math.PI/180)*canvas.height/2;
     					ctx.lineTo(x,y);
     					ctx.stroke();
-    					display_values("x_value", x - canvas.width/2); //arc degrees
-    					display_values("y_value",  ( 1 - (y/(canvas.height/2))).toFixed(3));//values between -1 and +1
+                        //arc degrees
+    					display_values("x_value", x - canvas.width/2);
+                        //values between -1 and +1
+    					display_values("y_value",(
+                            //this also removes the negative zero
+                             (1 - y/(canvas.height/2)).toFixed(3) == -0  ? 0 : (1 - y/(canvas.height/2)).toFixed(3))
+                         );
     					draw_curve();
                     }
 				}
