@@ -48,9 +48,9 @@ draw_grid_axis();
 
 //used to display numeric x and y values
 function display_values(span_id,value_to_display){
-	span = document.getElementById(span_id);
+	var span = document.getElementById(span_id);
 	span.removeChild(span.firstChild); 	//remove last child created
-	txt = document.createTextNode(value_to_display);
+	var txt = document.createTextNode(value_to_display);
 	span.appendChild(txt);
 }
 

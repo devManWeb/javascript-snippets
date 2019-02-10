@@ -69,11 +69,11 @@
             ctx.moveTo(random_num(600),random_num(300));
             ctx.lineTo(random_num(600),random_num(300));
             ctx.stroke();
-        } else if(type_of_shape == 1){ //rectangles
+        } else if(type_of_shape == 1){ //circles
             ctx.fillStyle = random_hex_color();
             ctx.arc(random_num(600),random_num(300), random_num(100), 0, 2 * Math.PI, false);
             ctx.fill();
-        } else if(type_of_shape == 2){ //circles
+        } else if(type_of_shape == 2){ //rectangles
             ctx.fillStyle = random_hex_color();
             ctx.rect(random_num(600),random_num(300),random_num(150),random_num(150));
             ctx.fill();
