@@ -4,4 +4,7 @@ The code in this repo was written to do cool stuff, for programming exercise or 
 ## List of Scripts
 
 - Random-shapes: this snippets creates random lines, circles or rectangles in a HTML canvas.
+
 - Trigonom: to view trigonometric functions in a HTML canvas.
+
+- Reduce text
