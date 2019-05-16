@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        div{
+            float:left;
+            margin-right:8%;
+            width: 30%;
+            min-width:300px;
+        }
+        textarea{
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            width:100%;
+        }
+        input{
+            width:50px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Insert here the text to reduce:</h2>
+        <button onclick="reduce_text()">Reduce</button> <button onClick="clear_input()">Clear</button> Max chars per line:<input type="number" value="25">
+        <br>
+        <textarea rows="20"></textarea>
+    </div>
+    <div>
+        <h2>Result - shortened text:</h2>
+        <button onclick="select_text()">Select All</button></a>
+        <br>
+        <textarea rows="20"></textarea>
+    </div>
+    <script>
+        "use strict";
+
+        function clear_input(){
+            let inserted = document.getElementsByTagName("textarea")[0];
+            inserted.value = '';
+        }
+
+        function reduce_text(){
+
+            const MAX_CHARS = document.getElementsByTagName("input")[0].value;
+
+            function process_line(line_str){
+                /*
+                * take every word of a line and remove a character,
+                * repeat the process if we are still above MAX_CHARS,
+                * if a word reaches a single character, keep it that way
+                * if we can no longer reduce anything, it shows the problem
+                */
+                if(line_str.length <= MAX_CHARS){
+                    console.log(line_str);
+                    return line_str;
+                } else {
+                    let temp_arr = user_str.split(" ");
+                    console.log(temp_arr);
+                    let part_proc_str = "";
+                    for (let word in temp_arr){
+                        part_proc_str = part_proc_str + word.slice(0,-1) + ".";
+
+                    }
+                    process_line(part_proc_str);
+                }
+
+            }
+
+            let user_str = document.getElementsByTagName("textarea")[0].value;
+            user_str.replace(/(\r\n|\r)/gm, "\n"); //we replace new lines with standard \n
+            let user_arr = user_str.split("\n");
+
+            for (let item of user_arr) {
+                try {
+                    process_line(item);
+                } catch(error) {
+                    console.log(error);
+                }
+            }
+            
+        }
+
+        function select_text(){
+            let result = document.getElementsByTagName("textarea")[1];
+            result.focus();
+            result.select();
+        }
+    </script>
+</body>
+</html>
