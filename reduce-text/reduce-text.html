@@ -38,7 +38,7 @@
 
         function clear_input(){
             let inserted = document.getElementsByTagName("textarea")[0];
-            inserted.value = '';
+            inserted.value = "";
         }
 
         function reduce_text(){
@@ -53,32 +53,42 @@
                 * if we can no longer reduce anything, it shows the problem
                 */
                 if(line_str.length <= MAX_CHARS){
-                    console.log(line_str);
-                    return line_str;
+                    return line_str + "\n";
                 } else {
-                    let temp_arr = user_str.split(" ");
-                    console.log(temp_arr);
+                    let temp_arr = line_str.split(/[. ]/);
+                    /*add a dot at the end of every word
+                    temp_arr.forEach(function(elem,index) {  
+                        temp_arr[index] += "."
+                    });*/
                     let part_proc_str = "";
-                    for (let word in temp_arr){
-                        part_proc_str = part_proc_str + word.slice(0,-1) + ".";
+                    temp_arr.forEach(function(word) {
+                        /*let to_remove = -1;
+                        //if there is a previous added dot at the end we remove 2 letters
+                        //(word.indexOf(".") > -1) ? to_remove = -2 : to_remove = -1;*/
+                        part_proc_str += word.slice(0,-2) + "."; //add dot at the word's end
+                    });
+                    return process_line(part_proc_str); //recursion
 
-                    }
-                    process_line(part_proc_str);
                 }
-
             }
 
             let user_str = document.getElementsByTagName("textarea")[0].value;
             user_str.replace(/(\r\n|\r)/gm, "\n"); //we replace new lines with standard \n
             let user_arr = user_str.split("\n");
 
+            let result_str = "";
+
             for (let item of user_arr) {
                 try {
-                    process_line(item);
+                    result_str += process_line(item);
                 } catch(error) {
-                    console.log(error);
+                    result_str += item + " " + error + "\n"; 
                 }
             }
+
+            let result = document.getElementsByTagName("textarea")[1];
+            result.value = "";
+            result.value += result_str;
             
         }
 
