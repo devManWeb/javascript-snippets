@@ -32,7 +32,7 @@
 <body>
     <div>
         <h1>Insert here the text to reduce:</h1>
-        <button onClick="clear_input()">Clear</button> Max chars per line:<input type="number" value="25" min="10" max="500">
+        <button onClick="clear_input()">Reduce</button> <button onClick="clear_input()">Clear</button> Max chars per line:<input type="number" value="25" min="10" max="500">
         <br>
         <textarea rows="20" oninput="reduce_text()"></textarea>
     </div>
@@ -79,33 +79,39 @@
 					}
                     let temp_arr = to_reduce.filter(remove_empty);
                     
-                    let part_proc_str = "";
-                     //if we can no longer reduce the sentence throw an error
-                	let no_longer = true;
+                     //if we can no longer reduce the sentence and we have numbers throw an error
+                	let too_long_A = true;
                 	temp_arr.forEach(function(word) {
-                		if(word.length >= 3){
-                			no_longer = false;
+                		if((word.length >= 3) && (/^\d+$/.test(word) == false)){
+                			too_long_A = false;
                 		}
                 	});
-                	if(no_longer){
+                	let too_long_B = false;
+                	temp_arr.forEach(function(word) {
+                		if (/^\d+$/.test(word)){ 
+                			too_long_B = true;
+                			return;
+                		}
+                	});
+                	if((too_long_A) && (too_long_B)){
                 		throw new Error("This sentence is too long to be shortened - please check this line!");
           			} 	
+          			
+          			let part_proc_str = "";
                     temp_arr.forEach(function(word,index) {
                     	if((word.length <= 2) && (word.length > 0)){ 
                     		//if it is impossible to shorten this word, we keep it intact and we add a dot
                     		part_proc_str += word;
-                    		part_proc_str += ".";
                     	} else if (/^\d+$/.test(word)){ 
                         	//if we have a number, keep it intact
                         	part_proc_str += word;
                     	} else if (word[word.length] == "."){
                     		//If there is already an abbreviation
                     		part_proc_str += word.slice(0,-2); 
-		                    part_proc_str += ".";
                     	} else {
 		                    part_proc_str += word.slice(0,-1); 
-		                    part_proc_str += ".";
                         }
+                        part_proc_str += ".";
                     });
                     return process_line(part_proc_str); //recursion
                 }
