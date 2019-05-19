@@ -8,3 +8,5 @@ The code in this repo was written to do cool stuff, for programming exercise or 
 - Trigonom: to view trigonometric functions in a HTML canvas.
 
 - Simple-clock: a simple analogic clock in a HTML canvas.
+
+- Reduce-text: Reduce the text to the desired length.
