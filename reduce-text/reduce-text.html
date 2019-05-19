@@ -3,11 +3,20 @@
 <head>
     <meta charset="utf-8">
     <style>
+    	h1 {
+    		font-size: 22px;
+    	}
+    	h2 {
+    		font-size: 17px;
+    	}
         div{
             float:left;
             margin-right:8%;
             width: 30%;
             min-width:300px;
+        }
+        .info {
+        	width:60%
         }
         textarea{
             -webkit-box-sizing: border-box;
@@ -22,53 +31,84 @@
 </head>
 <body>
     <div>
-        <h2>Insert here the text to reduce:</h2>
-        <button onclick="reduce_text()">Reduce</button> <button onClick="clear_input()">Clear</button> Max chars per line:<input type="number" value="25">
+        <h1>Insert here the text to reduce:</h1>
+        <button onClick="clear_input()">Clear</button> Max chars per line:<input type="number" value="25" min="10" max="500">
         <br>
-        <textarea rows="20"></textarea>
+        <textarea rows="20" oninput="reduce_text()"></textarea>
     </div>
     <div>
-        <h2>Result - shortened text:</h2>
+        <h1>Result - shortened text:</h1>
         <button onclick="select_text()">Select All</button></a>
         <br>
         <textarea rows="20"></textarea>
     </div>
+    <div class="info">
+		<h2>Info</h2>
+		<p>The inserted text will be shortened based on the number of characters you have decided to keep for each line, using abbreviations with dots.
+		If the sentence cannot be reduced, a warning is shown for the affected line. Numbers are not shortened and in necessary, spaces are replaced with dots.</p>
+	</div>
     <script>
         "use strict";
 
         function clear_input(){
-            let inserted = document.getElementsByTagName("textarea")[0];
-            inserted.value = "";
+        	document.getElementsByTagName("textarea")[0].value = "";
+        	document.getElementsByTagName("textarea")[1].value = "";
         }
 
         function reduce_text(){
-
+        
             const MAX_CHARS = document.getElementsByTagName("input")[0].value;
 
             function process_line(line_str){
                 /*
                 * take every word of a line and remove a character,
                 * repeat the process if we are still above MAX_CHARS,
-                * if a word reaches a single character, keep it that way
-                * if we can no longer reduce anything, it shows the problem
+                * if a word reaches a minumum of two characters, keep it that way
+                * if we can no longer reduce anything, it raise an error
+                * numbers are not reduced
                 */
                 if(line_str.length <= MAX_CHARS){
-                    return line_str + "\n";
+                    return line_str;
                 } else {
-                    let temp_arr = line_str.split(/[. ]/);
-                    /*add a dot at the end of every word
-                    temp_arr.forEach(function(elem,index) {  
-                        temp_arr[index] += "."
-                    });*/
+               		//array of words divided by a space or a dot
+                    let to_reduce = line_str.split(/[ .]/); 
+                    
+                    function remove_empty(value) {
+                    	//used by the filter above
+						return value != "";
+					}
+                    let temp_arr = to_reduce.filter(remove_empty);
+                    
                     let part_proc_str = "";
-                    temp_arr.forEach(function(word) {
-                        /*let to_remove = -1;
-                        //if there is a previous added dot at the end we remove 2 letters
-                        //(word.indexOf(".") > -1) ? to_remove = -2 : to_remove = -1;*/
-                        part_proc_str += word.slice(0,-2) + "."; //add dot at the word's end
+                     //if we can no longer reduce the sentence throw an error
+                	let no_longer = true;
+                	temp_arr.forEach(function(word) {
+                		if(word.length >= 3){
+                			no_longer = false;
+                		}
+                	});
+                	if(no_longer){
+                		throw new Error("This sentence is too long to be shortened - please check this line!");
+          			} 	
+                    temp_arr.forEach(function(word,index) {
+                    	if((word.length <= 2) && (word.length > 0)){ 
+                    		//if it is impossible to shorten this word, we keep it intact and we add a dot
+                    		part_proc_str += word;
+                    		part_proc_str += ".";
+                    	} else if (/^\d+$/.test(word)){ 
+                        	//if we have a number, keep it intact
+                        	part_proc_str += word;
+                    	} else if (word[word.length] == "."){
+                    		//If there is already an abbreviation
+                    		part_proc_str += word.slice(0,-2); 
+		                    part_proc_str += ".";
+                    	} else {
+		                    part_proc_str += word.slice(0,-1); 
+		                    part_proc_str += ".";
+                        }
                     });
+                    debugger;
                     return process_line(part_proc_str); //recursion
-
                 }
             }
 
@@ -80,9 +120,9 @@
 
             for (let item of user_arr) {
                 try {
-                    result_str += process_line(item);
+                    result_str += process_line(item) + "\n";
                 } catch(error) {
-                    result_str += item + " " + error + "\n"; 
+                    result_str += error + " - The original phrase was: " + item + "\n"; 
                 }
             }
 
