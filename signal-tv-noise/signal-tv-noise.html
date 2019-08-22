@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<style>
+	canvas{
+		background-color: black;
+	}
+	</style>
+</head>
+<body>
+<canvas id="drawing_canvas" width="720" height="400" style="border:1px solid #000000;"></canvas>
+<div>
+	<button onclick="start_noise()">Start</button>
+	<button onclick="stop_noise()" disabled>Stop</button>
+</div>
+<script>
+
+	"use strict";
+	//TODO:write the function for the sound
+
+	//closure for the loop of
+	function closure_vars(){
+		var status = false;
+		return {
+			set_status(bool){
+				status = bool;
+			},
+			get_status(){
+				return status;
+			}
+		}
+	}
+
+	const loop_status = closure_vars();
+
+	function clear_canvas(){
+		//used to clear the canvas
+		let canvas = document.getElementById("drawing_canvas");
+		let ctx = canvas.getContext("2d");
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+	}
+
+	function draw_noise(){
+		//draws random squares
+		clear_canvas();
+		let canvas = document.getElementById("drawing_canvas");
+		let ctx = canvas.getContext("2d");
+		ctx.fillStyle = "grey";
+
+		const ITERATION_NUMBER = 30000;
+		for(let i=0; i<ITERATION_NUMBER; i++){
+
+			let random_height = canvas.height * 2 * Math.random();
+			let random_width = canvas.width * 2 * Math.random();
+			let max_num = 4;
+			ctx.fillRect(
+				random_height,
+				random_width, 
+				max_num * Math.random(), 
+				max_num * Math.random()
+			);
+		}
+
+		if(loop_status.get_status()){
+			setTimeout(draw_noise,125);
+		}
+	}
+
+	function stop_noise(){
+		//start button enabled, stop button disabled
+		document.getElementsByTagName("button")[0].disabled = false;
+		document.getElementsByTagName("button")[1].disabled = true;
+		loop_status.set_status(false);
+	}
+
+	function start_noise(){
+		document.getElementsByTagName("button")[0].disabled = true;
+		document.getElementsByTagName("button")[1].disabled = false;
+		loop_status.set_status(true);
+		draw_noise();
+	}
+
+</script>
+</body>
+</html>
