@@ -62,7 +62,12 @@
 	}
 
 	function draw_noise(){
-		//draws random squares - only if we have the explict auth
+		/*
+		* draws random squares - only if we have the explict auth
+		* performance is around 33-35 fps
+		* the number of iterations of this loop is equal to
+		* (canvas.height / INCREASE_COEFF_A) + (canvas.width/ INCREASE_COEFF_B)
+		*/
 
 		if(document.getElementById("run-auth").checked){
 				
@@ -77,13 +82,16 @@
 
 			ctx.fillStyle = "black";
 
-			for(let curr_height = 0; curr_height < canvas.height; curr_height = curr_height + 2){
+			const INCREASE_COEFF_A = 1.5;
+			const INCREASE_COEFF_B = 2;
+
+			for(let curr_height = 0; curr_height < canvas.height; curr_height = curr_height + INCREASE_COEFF_A){
 
 				if(random_boolean()){
 					continue;
 				}
 
-				for(let curr_width = 0; curr_width < canvas.width; curr_width = curr_width + 2){
+				for(let curr_width = 0; curr_width < canvas.width; curr_width = curr_width + INCREASE_COEFF_B){
 
 					if(random_boolean()){
 						continue;
@@ -126,6 +134,7 @@
 	}
 
 	function start_noise(){
+		//starts the sound and image generation
 		if(document.getElementById("run-auth").checked){
 			//we must have the explicit auth
 			document.getElementsByTagName("button")[0].disabled = true;
@@ -137,11 +146,15 @@
 	}
 
 	function stop_noise(){
-		//start button enabled, stop button disabled
+		/*
+		* start button enabled, stop button disabled
+		* image and sound generation stopped
+		*/
 		document.getElementsByTagName("button")[0].disabled = false;
 		document.getElementsByTagName("button")[1].disabled = true;
 		loop_status.set_status(false);
 		loop_status.getAudioApi().close();
+		clear_canvas();
 	}
 
 </script>
