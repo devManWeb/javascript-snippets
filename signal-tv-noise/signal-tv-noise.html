@@ -4,30 +4,50 @@
 	<meta charset="utf-8">
 	<style>
 	canvas{
-		background-color: black;
+		background-color: lightgrey;
+	}
+	p {
+		line-height: 0px;
+	}
+	#warning-info{
+		width:720px;
+		margin-top:10px;
+		text-align:center;
 	}
 	</style>
 </head>
 <body>
 <canvas id="drawing_canvas" width="720" height="400" style="border:1px solid #000000;"></canvas>
-<div>
-	<button onclick="start_noise()">Start</button>
-	<button onclick="stop_noise()" disabled>Stop</button>
+<div id="warning-info">
+	<p>Warning, this animation contains flashing images and fast repeating patterns!</p>
+	<p>A few people may experience epileptic seizure as a result of that.</p>
+	<p>
+		<input type="checkbox" id="run-auth">I understand and I want to proceed 
+		<button onclick="start_noise()">Start</button>
+		<button onclick="stop_noise()" disabled>Stop</button>
+	</p>
 </div>
 <script>
-
 	"use strict";
-	//TODO:write the function for the sound
 
-	//closure for the loop of
 	function closure_vars(){
-		var status = false;
+		//closure used for animation start/stop and for sound
+		let status = false;
+		let audioApi;
+
 		return {
 			set_status(bool){
 				status = bool;
 			},
 			get_status(){
 				return status;
+			},
+			setAudioApi(obj){
+				//used to memorize the AudioContext()
+				audioApi = obj;
+			},
+			getAudioApi(){
+				return audioApi;
 			}
 		}
 	}
@@ -42,28 +62,77 @@
 	}
 
 	function draw_noise(){
-		//draws random squares
-		clear_canvas();
-		let canvas = document.getElementById("drawing_canvas");
-		let ctx = canvas.getContext("2d");
-		ctx.fillStyle = "grey";
+		//draws random squares - only if we have the explict auth
 
-		const ITERATION_NUMBER = 30000;
-		for(let i=0; i<ITERATION_NUMBER; i++){
+		if(document.getElementById("run-auth").checked){
+				
+			clear_canvas();
+			let canvas = document.getElementById("drawing_canvas");
+			let ctx = canvas.getContext("2d");
 
-			let random_height = canvas.height * 2 * Math.random();
-			let random_width = canvas.width * 2 * Math.random();
-			let max_num = 4;
-			ctx.fillRect(
-				random_height,
-				random_width, 
-				max_num * Math.random(), 
-				max_num * Math.random()
-			);
+			function random_boolean(){
+				//returns a random boolean value
+				return Math.round(Math.random()) == 1 ? true : false;
+			}
+
+			ctx.fillStyle = "black";
+
+			for(let curr_height = 0; curr_height < canvas.height; curr_height = curr_height + 2){
+
+				if(random_boolean()){
+					continue;
+				}
+
+				for(let curr_width = 0; curr_width < canvas.width; curr_width = curr_width + 2){
+
+					if(random_boolean()){
+						continue;
+					}
+
+					//ctx.rect(x,y,width,height);
+					ctx.fillRect(
+						curr_width, 
+						curr_height,
+						2, 
+						2
+					);
+
+				}
+
+			}
+
+			if(loop_status.get_status()){
+				//update the animation on the monitor
+				window.requestAnimationFrame(draw_noise);
+			}
+
+		} else {
+			stop_noise();
 		}
+	}
 
-		if(loop_status.get_status()){
-			setTimeout(draw_noise,125);
+	function generate_noise_sound(){
+		let context = new AudioContext();
+		loop_status.setAudioApi(context);
+		const buffer_size = 4096;
+		let noise = context.createScriptProcessor(buffer_size, 1, 1);
+		noise.onaudioprocess = function(e) {
+			let output = e.outputBuffer.getChannelData(0);
+			for (let i = 0; i < buffer_size; i++) {
+				output[i] = Math.random() * 2 - 1;
+			}
+		}
+		noise.connect(context.destination);
+	}
+
+	function start_noise(){
+		if(document.getElementById("run-auth").checked){
+			//we must have the explicit auth
+			document.getElementsByTagName("button")[0].disabled = true;
+			document.getElementsByTagName("button")[1].disabled = false;
+			loop_status.set_status(true);
+			draw_noise();
+			generate_noise_sound();
 		}
 	}
 
@@ -72,13 +141,7 @@
 		document.getElementsByTagName("button")[0].disabled = false;
 		document.getElementsByTagName("button")[1].disabled = true;
 		loop_status.set_status(false);
-	}
-
-	function start_noise(){
-		document.getElementsByTagName("button")[0].disabled = true;
-		document.getElementsByTagName("button")[1].disabled = false;
-		loop_status.set_status(true);
-		draw_noise();
+		loop_status.getAudioApi().close();
 	}
 
 </script>
