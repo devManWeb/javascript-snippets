@@ -1,0 +1,40 @@
+h1 {
+    font-size: 22px;
+}
+h2 {
+    font-size: 17px;
+}
+#main-container{
+    width: 80%;
+    margin: 0 auto;
+}
+.text-div{
+    float:left;
+    width: 40%;
+    margin-left:5%;
+    margin-right:5%;
+}
+textarea{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width:100%;
+}
+#info-div{
+    float:left;
+    width: auto;
+    margin-left:5%;
+    margin-right:5%;
+}
+input{
+    width:40px;
+}
+
+@media only screen and (max-width: 1250px) {
+    /*from 2 textareas one next to the other to only one*/
+    .text-div{
+        margin-left:5%;
+        margin-right:5%;
+        width:90%;
+    }
+}
