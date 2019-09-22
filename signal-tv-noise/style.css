@@ -1,0 +1,11 @@
+canvas{
+    background-color: lightgrey;
+}
+p {
+    line-height: 0px;
+}
+#warning-info{
+    width:720px;
+    margin-top:10px;
+    text-align:center;
+}
