@@ -4,10 +4,10 @@ canvas{
     /*
     * vw are used here to make the canvas responsive
     * from 720 : 400  we get  90 : 50
-    * reduced by 10% each are 80 : 45
+    * reduced by 15% each are 75 : 42.5
     */
-    width:80vw;
-    height:45vw;
+    width:75vw;
+    height:42.5vw;
 }
 #container-div{
     text-align:center;
@@ -15,6 +15,5 @@ canvas{
 #warning-info{
     width:80vw; /*same as canvas*/
     margin-left: 7.5vw;
-    margin-top:5px;
     text-align: center;
 }
