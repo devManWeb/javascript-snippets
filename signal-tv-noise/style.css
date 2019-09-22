@@ -1,11 +1,20 @@
 canvas{
     background-color: lightgrey;
+    border:1px solid #000000;
+    /*
+    * vw are used here to make the canvas responsive
+    * from 720 : 400  we get  90 : 50
+    * reduced by 10% each are 80 : 45
+    */
+    width:80vw;
+    height:45vw;
 }
-p {
-    line-height: 0px;
+#container-div{
+    text-align:center;
 }
 #warning-info{
-    width:720px;
-    margin-top:10px;
-    text-align:center;
+    width:80vw; /*same as canvas*/
+    margin-left: 7.5vw;
+    margin-top:5px;
+    text-align: center;
 }
