@@ -1,9 +1,11 @@
 "use strict";
 
 function draw_circle(){
+	//clears the canvas and draws the main circle
 	let canvas = document.getElementById("clock_canvas");
 	let ctx = canvas.getContext("2d");
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.strokeStyle = "black";
 	ctx.beginPath();
 	ctx.arc(150, 150, 150, 0, 2 * Math.PI);
 	ctx.stroke(); 
@@ -28,36 +30,87 @@ function draw_indicator(data,unit_in_rad,length,color){
 	let x = 150 + length*Math.cos(curr_angle_rad);
 	let y = 150 + length*Math.sin(curr_angle_rad);
 	
-	ctx.beginPath();
 	ctx.strokeStyle = color;
+	ctx.beginPath();
 	ctx.moveTo(150,150);
 	ctx.lineTo(x,y);
 	ctx.stroke();
 	
 }
 
+function update_DOM(value,span_id){
+	//this function is used to update value in span tags
+	let span = document.getElementById(span_id);
+	span.textContent = value;
+}
+
+// ------- function used for the indicators -------
+
 function draw_hours(hours){
 	draw_indicator(hours,6,80,"#b30000");
 }
 function draw_minutes(mins){
-	draw_indicator(mins,30,110,"#005ab3");
+	draw_indicator(mins,30,105,"#005ab3");
 }
 function draw_seconds(seconds){
-	draw_indicator(seconds,30,145,"#000000");
+	draw_indicator(seconds,30,130,"#000000");
 }
 
-function update_date(){
+// ------- STOPWATCH -------
 
-	function update_DOM(value,span_id){
-		//this function is used to update the digital clock
-		let span = document.getElementById(span_id);
-		span.textContent = value;
+function stopwatch_closure(){
+	/*
+	* this closure is used to manage the stopwatch
+	* with the above methods, we can start, stop or reset it
+	* we calculate the value in 1/10 sec by subtracting the dates
+	*/
+	let isRunning = false;
+	let internal_value = 0;
+	let past_date = 0;
+
+	return{
+		tick_clock(){
+			if (isRunning){
+				let now = new Date();
+				internal_value = Math.abs(now - past_date) / 100;
+				internal_value = Math.floor(internal_value);
+			}
+			update_DOM(internal_value,"stopwatch-value");	
+			return internal_value;		
+		},
+		start(){
+			past_date = new Date();
+			isRunning = true;
+		},
+		stop(){
+			isRunning = false;
+		},
+		reset(){
+			isRunning = false;
+			internal_value = 0;
+			past_date = 0;
+		}
 	}
+}
 
+const stopwatch = stopwatch_closure();
+
+function draw_stopwatch(seconds){
+	draw_indicator(seconds,300,145,"#00b300");
+}
+
+// ------- Other code -------
+
+function update_date(){
+	/*
+	* Called every tenth of a second, 
+	* it updates the clock values 
+	* and calls stopwatch_closure.tick_clock()
+	*/
 	let today = new Date();
 	let curr_hour =  today.getHours();
 	let curr_minute = today.getMinutes();
-	let curr_seconds= today.getSeconds();
+	let curr_seconds = today.getSeconds();
 
 	draw_circle();
 
@@ -71,7 +124,12 @@ function update_date(){
 
 	draw_seconds(curr_seconds);
 	update_DOM(curr_seconds,"DOM-s");
+
+	let stopwatch_value = stopwatch.tick_clock();
+	draw_stopwatch(stopwatch_value);
+
 }
 
-update_date();
-setInterval(update_date, 1000); //clock updated every second
+update_date(); //first start
+
+setInterval(update_date, 100); //clock updated every 1/10 of second
