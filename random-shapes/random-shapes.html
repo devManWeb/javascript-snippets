@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    	<meta charset="utf-8">
-        <title>Random Line Generator</title>
+    <meta charset="utf-8">
+    <title>Random Line Generator</title>
+    <link rel="stylesheet" href="style.css"></style>
 </head>
 <body>
-    <div>
-        <canvas id="canvas" style="border:2px solid black;" width="600" height="300">
+    <div id="container-div">
+        <canvas id="canvas" width="600" height="300"></canvas>
+        <br>
+        <select id="user_choice">
+            <option value ="0" selected>Draw some lines</option>
+            <option value ="1" >Draw some circles</option>
+            <option value ="2" >Draw some rectangles</option>
+        </select>
+        <button id="start_button">Start</button>
+        <button id="end_button">Stop</button>
+        <button id="clear_button">Clear</button>
     </div>
-    <select id="user_choice">
-        <option value ="0" selected>Draw some lines</option>
-        <option value ="1" >Draw some circles</option>
-        <option value ="2" >Draw some rectangles</option>
-    </select>
-    <button id="start_button">Start</button>
-    <button id="end_button">Stop</button>
-    <button id="clear_button">Clear</button>
+    <script src="app.js"></script>
 </body>
-<script src="app.js"></script>
 </html>
