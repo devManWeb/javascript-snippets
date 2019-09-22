@@ -20,7 +20,8 @@ function reduce_text(){
         if(line_str.length <= MAX_CHARS){
             return line_str;
         } else {
-               //array of words divided by a space or a dot
+            
+            //array of words divided by a space or a dot
             let to_reduce = line_str.split(/[ .]/); 
             
             function remove_empty(value) {
@@ -29,25 +30,23 @@ function reduce_text(){
             }
             let temp_arr = to_reduce.filter(remove_empty);
             
-             //if we can no longer reduce the sentence and we have numbers throw an error
-            let too_long_A = true;
+            /*
+            * we can still reduce one of the words present?
+            * numbers are never reduced
+            */
+            let are_words_too_long = true;
             temp_arr.forEach(function(word) {
                 if((word.length >= 3) && (/^\d+$/.test(word) == false)){
-                    too_long_A = false;
+                    are_words_too_long = false;
                 }
             });
-            let too_long_B = false;
-            temp_arr.forEach(function(word) {
-                if (/^\d+$/.test(word)){ 
-                    too_long_B = true;
-                    return;
-                }
-            });
-            if((too_long_A) && (too_long_B)){
+
+            if(are_words_too_long){
                 throw new Error("This sentence is too long to be shortened - please check this line!");
-              } 	
+            } 	
               
-              let part_proc_str = "";
+            let part_proc_str = "";
+
             temp_arr.forEach(function(word,index) {
                 if((word.length <= 2) && (word.length > 0)){ 
                     //if it is impossible to shorten this word, we keep it intact and we add a dot
@@ -61,8 +60,11 @@ function reduce_text(){
                 } else {
                     part_proc_str += word.slice(0,-1); 
                 }
+
                 part_proc_str += ".";
+      
             });
+
             return process_line(part_proc_str); //recursion
         }
     }
