@@ -2,12 +2,42 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Simple clock</title>
+	<title>Simple clock</title>
+	<link rel="stylesheet" href="style.css"></style>
 </head>
 <body>
 	<canvas id="clock_canvas" width="300" height="300"></canvas>
 	<br>
-	It's <span id="DOM-h"></span> hours, <span id="DOM-m"></span> minutes and <span id="DOM-s"></span> seconds.
+	It's <span id="DOM-h"></span> hours, <span id="DOM-m"></span> minutes and <span id="DOM-s"></span> seconds. 
+	<!-- 
+	<div>
+		<h3>Stopwatch</h3>
+		<span id="stopwatch-h">0</span> : 
+		<span id="stopwatch-m">0</span> : 
+		<span id="stopwatch-s">0</span>
+		<br>
+		<button>Start</button> <button>Stop</button>
+	</div>
+	<div>
+		<h3>Timer</h3>
+		Set time: 
+		<input id="timer-set" type="number" min="0" max="9999">
+		<br>
+		Remaining time: 
+		<span id="timer-h">0</span> : 
+		<span id="timer-m">0</span> : 
+		<span id="timer-s">0</span>
+		<br>
+		<button>Start</button> <button>Clear</button>
+	</div>
+	<div>
+		<h3>Clock</h3>
+		Set time: 
+		<input id="clock-set" type="time"> : 
+		<br>
+		<input type="checkbox">Enable
+	</div>
+	-->
 	<script src="app.js"></script>
 </body>
 </html>
