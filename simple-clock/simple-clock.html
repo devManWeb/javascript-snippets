@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
 	<title>Simple clock</title>
-	<link rel="stylesheet" href="style.css"></style>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<canvas id="clock_canvas" width="300" height="300"></canvas>
@@ -11,12 +11,24 @@
 	It's <span id="DOM-h"></span> hours, <span id="DOM-m"></span> minutes and <span id="DOM-s"></span> seconds. 
 	<div>
 		<h3>Stopwatch</h3>
-		Tenths of a second <span id="stopwatch-value">0</span>
+		<span id="stp-hh">00</span> : <span id="stp-mm">00</span> : <span id="stp-ss">00</span> : <span id="stp-ds">00</span>
+		<br>
 		<br>
 		<button onclick="stopwatch.start()">Start</button> 
 		<button onclick="stopwatch.stop()">Stop</button> 
 		<button onclick="stopwatch.reset()">Reset</button>
 	</div>
+	<div>
+		<h3>Alarm clock</h3>
+		<input type="time" id="clock-cfg">
+		<br>
+		<br>
+		Enable <input type="checkbox" id="alarm-enabled"> <button onclick="alarm.snooze()">Snooze</button> 
+	</div>
+	<script src="canvas.js"></script>
+	<script src="clock.js"></script>
+	<script src="stopwatch.js"></script>
+	<script src="alarm_clock.js"></script>
 	<script src="app.js"></script>
 </body>
 </html>
