@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Function equation</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="style.css"></style>
+	<script src="memory.js"></script>
+	<script src="conversions.js"></script>
+	<script src="canvas.js"></script>
+</head>
+<body>
+	<div id="container-div">
+		<canvas id="drawing_canvas" width="720" height="400"></canvas>
+		<br>
+		Maximum X Value: <input type='number' id='x-value' min='0.1' max='100' step='0.1'>
+		Maximum Y Value: <input type='number' id='y-value' min='0.1' max='100' step='0.1'>
+		<button id='clear-button'>Clear</button>
+		<br>
+		Current X: <span id='x-val'>0</span> Current Y: <span id='y-val'>0</span>
+		The line equation is: <span id='eq-txt'>null</span>
+	</div>
+	<script src="app.js"></script>
+</body>
+</html>

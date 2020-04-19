@@ -1,0 +1,16 @@
+body{
+    margin-top:10px;
+}
+canvas {
+    border:1px solid #000000;
+    /*
+    * vw are used here to make the canvas responsive
+    * from 720 : 400  we get  90 : 50
+    * reduced by 10% each are 80 : 45
+    */
+    width:80vw;
+    height:45vw;
+}
+#container-div{
+    text-align:center;
+}
