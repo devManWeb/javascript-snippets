@@ -1,0 +1,8 @@
+.graph {
+	position: absolute;
+	height: 200px;
+	width: 300px;
+	margin-top: 15px;
+	border-left: 1px dotted #555;
+	border-bottom: 1px dotted #555;
+}
