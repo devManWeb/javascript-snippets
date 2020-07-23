@@ -2,7 +2,7 @@ canvas {
     border:1px solid #000000;
     /*
     * vw are used here to make the canvas responsive
-    * from 600 : 300  we get  100 : 50
+    * from 2400 : 1200  we get  100 : 50
     * reduced by 20% each are 80 : 40
     */
     width:80vw;

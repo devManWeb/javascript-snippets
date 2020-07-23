@@ -1,3 +1,5 @@
+"use strict";
+
 (function () {
 
     document.getElementById("start_button").addEventListener("click", start_shapes);
@@ -23,7 +25,7 @@
         }
     };
 
-    var status = vars_fx();
+    const status = vars_fx();
 
     function start_shapes(){
         if(!(status.get_run_status())){ //this prevents changes to the interval when draw is running
@@ -45,16 +47,17 @@
         ctx.beginPath();
         if(type_of_shape == 0){ //lines
             ctx.strokeStyle = random_hex_color();
-            ctx.moveTo(random_num(600),random_num(300));
-            ctx.lineTo(random_num(600),random_num(300));
+            ctx.lineWidth = 5;
+            ctx.moveTo(random_num(2400),random_num(1200));
+            ctx.lineTo(random_num(2400),random_num(1200));
             ctx.stroke();
         } else if(type_of_shape == 1){ //circles
             ctx.fillStyle = random_hex_color();
-            ctx.arc(random_num(600),random_num(300), random_num(100), 0, 2 * Math.PI, false);
+            ctx.arc(random_num(2400),random_num(1200), random_num(400), 0, 2 * Math.PI, false);
             ctx.fill();
         } else if(type_of_shape == 2){ //rectangles
             ctx.fillStyle = random_hex_color();
-            ctx.rect(random_num(600),random_num(300),random_num(150),random_num(150));
+            ctx.rect(random_num(2400),random_num(1200),random_num(600),random_num(600));
             ctx.fill();
         }
     }
@@ -72,7 +75,7 @@
     function clear_canvas(){
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext("2d");
-        ctx.clearRect(0, 0, 600, 300);
+        ctx.clearRect(0, 0, 2400, 1200);
     }
 
 })();

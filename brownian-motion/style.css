@@ -1,0 +1,21 @@
+body{
+    font-size:1.2em;
+}
+canvas {
+    border:1px solid #000000;
+}
+#container-div{
+    text-align:center;
+    width:100%;
+}
+#canvas-particles,#canvas-brownian{
+    position: absolute;
+    text-align:center;
+    width:80vw;
+    left:10vw;
+}
+#description-buttons{
+    top:90vw;
+    position: relative;
+    top:42vw;
+}

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Brownian motion</title>
+    <link rel="stylesheet" href="style.css"></style>
+</head>
+<body>
+    <div id="container-div">
+        <canvas id="canvas-brownian" width="2400" height="1200"></canvas>
+        <canvas id="canvas-particles" width="2400" height="1200"></canvas>
+        <div id="description-buttons">
+            <p>By pressing start, a simulation of the movement of molecules in a fluid will appear.<br>This simulation is very simplified, but it is possible to follow the trajectory of one molecule over time.</p>
+            <button id="start-btn">Start</button>
+            <button id="stop-btn" disabled>Stop</button>
+            <button id="clear-btn" disabled>Clear</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
