@@ -3,16 +3,18 @@ The code in this repo was written to do cool stuff, for programming exercise or 
 
 ## List of Scripts
 
-- Random-shapes: this snippets creates random lines, circles or rectangles in a HTML canvas.
+- Brownian-motion: Follow the trajectory of one molecule in a fluid over time. This simulation is very simplified.
 
-- Trigonom: to view trigonometric functions in a HTML canvas.
-
-- Simple-clock: a simple analogic clock in a HTML canvas.
-
-- Reduce-text: Reduce the text to the desired length.
-
-- Function-equation: Calculate the equation of a line passing through two points
+- Function-equation: Calculate the equation of a line passing through two points.
 
 - Movable-graph: Demo of a simple SVG chart updated every second with random values, movable.
 
-- Brownian-motion: Follow the trajectory of one molecule in a fluid over time. This simulation is very simplified.
+- Random-shapes: this snippets creates random lines, circles or rectangles in a HTML canvas.
+
+- Reduce-text: Reduce the text to the desired length.
+
+- Signal-tv-noise: Simulates the tv noise that appears when there is no signal.
+
+- Simple-clock: a simple analogic clock in a HTML canvas.
+
+- Trigonom: to view trigonometric functions in a HTML canvas.
